@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"github.com/danielh839/simple-forum/codegen/db"
-	"github.com/danielh839/simple-forum/model"
+	"github.com/danielh839/simple-forum/internal/model"
 )
 
 func convertMany[Record, Model any](records []Record, convert func(r Record) Model) []Model {

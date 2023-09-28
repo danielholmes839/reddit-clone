@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/danielh839/simple-forum/codegen/db"
-	"github.com/danielh839/simple-forum/model"
+	"github.com/danielh839/simple-forum/internal/model"
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
 )

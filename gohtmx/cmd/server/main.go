@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/danielh839/simple-forum/model"
-	"github.com/danielh839/simple-forum/postgres"
+	"github.com/danielh839/simple-forum/internal/model"
+	"github.com/danielh839/simple-forum/internal/postgres"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -99,7 +99,7 @@ var funcMap = template.FuncMap{
 }
 
 func DefaultTemplates() (*template.Template, error) {
-	templateFiles, err := filepath.Glob("./templates/*.html")
+	templateFiles, err := filepath.Glob("./assets/templates/*.html")
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func DefaultTemplates() (*template.Template, error) {
 
 func RefreshTemplates(refresh func() (*template.Template, error)) func() *template.Template {
 	watcher, err := fsnotify.NewWatcher()
-	watcher.Add("./templates")
+	watcher.Add("./assets/templates")
 	if err != nil {
 		log.Fatal(err)
 	}

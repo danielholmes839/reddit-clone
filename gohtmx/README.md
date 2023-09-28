@@ -1,5 +1,7 @@
 # Go HTMX Reddit Clone
 
+`go run cmd/server/main.go`
+
 docker run --rm -v "PATH-ROOT:/src" -w /src/codegen kjconroy/sqlc generate
 docker run --rm -v "C:\Users\Daniel\Desktop\less-frontend\gohtmx:/src" -w /src/codegen kjconroy/sqlc generate
 

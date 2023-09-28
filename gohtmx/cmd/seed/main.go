@@ -5,8 +5,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/danielh839/simple-forum/model"
-	"github.com/danielh839/simple-forum/postgres"
+	"github.com/danielh839/simple-forum/internal/model"
+	"github.com/danielh839/simple-forum/internal/postgres"
 )
 
 func main() {
