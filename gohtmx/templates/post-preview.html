@@ -1,0 +1,50 @@
+<div class="hx-target bg-white rounded p-3 mb-3 shadow hx-boost">
+  <h1 class="font-semibold text-xl"><a href="/thread/{{.ID}}" hx-boost="true">{{ .Title }}<a></h1>
+  <h2>
+    <span class="font-semibold text-gray-600">u/{{.Author}}</span> {{ Timestamp .CreatedAt }}
+  </h2>
+  <span>
+    <p class="mt-1 text-sm">{{.Content}}</p>
+  </span>
+  <div class="mt-2 pt-1 border-t">
+    {{ if eq .Vote 1}}
+    <button
+      hx-delete="/thread/{{.ID}}/vote"
+      hx-target="closest .hx-target"
+      hx-swap="outerHTML"
+      class="bg-orange-200 px-2 rounded-full font-mono font-semibold"
+    >
+      +
+    </button>
+    {{ else}}
+    <button
+      hx-post="/thread/{{.ID}}/vote?direction=up"
+      hx-target="closest .hx-target"
+      hx-swap="outerHTML"
+      class="bg-gray-100 px-2 rounded-full font-mono font-semibold"
+    >
+      +
+    </button>
+    {{ end }} {{ if eq .Vote -1}}
+    <button
+      hx-delete="/thread/{{.ID}}/vote"
+      hx-target="closest .hx-target"
+      hx-swap="outerHTML"
+      class="bg-blue-200 px-2 rounded-full font-mono font-semibold"
+    >
+      -
+    </button>
+    {{ else}}
+    <button
+      hx-post="/thread/{{.ID}}/vote?direction=down"
+      hx-target="closest .hx-target"
+      hx-swap="outerHTML"
+      class="bg-gray-100 px-2 rounded-full font-mono font-semibold"
+    >
+      -
+    </button>
+    {{ end }} 
+  
+    <span class="text-sm text-gray-800 tracking-wide"> Score: {{ Sub .UpvoteCount .DownvoteCount }} Comments: {{ .CommentCount }} </span>
+  </div>
+</div>

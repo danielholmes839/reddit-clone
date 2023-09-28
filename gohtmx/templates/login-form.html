@@ -1,0 +1,51 @@
+<form hx-post="/login" hx-trigger="submit">
+  <div class="mb-3">
+    <label for="username">Username</label>
+    <input
+      class="bg-gray-100"
+      type="text"
+      id="username"
+      name="username"
+      placeholder="username"
+      value="{{.Values.Username}}"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password">Password</label>
+    <input
+      class="bg-gray-100"
+      type="password"
+      id="password"
+      name="password"
+      value="{{.Values.Password}}"
+    />
+  </div>
+
+  {{if .Err}}
+  <div class="bg-red-200 p-3 mb-3">
+    <p>{{.Err}}</p>
+  </div>
+  {{end}}
+
+  <p id="indicator">Loading...</p>
+
+  <button
+    hx-disable-elt="this"
+    hx-indicator="#indicator"
+    type="submit"
+    class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm disabled:bg-gray-200"
+  >
+    Submit
+  </button>
+</form>
+<style>
+  #indicator {
+    display: none;
+    opacity: 0;
+  }
+
+  .htmx-request #indicator {
+    display: block;
+    opacity: 1;
+  }
+</style>
