@@ -13,7 +13,7 @@ type User struct {
 	CreatedAt time.Time
 }
 
-// Threads are posts and comments
+// Threads represent posts and comments
 type Thread struct {
 	ID        uuid.UUID
 	RootID    uuid.UUID     // this can match the thread id
@@ -36,6 +36,32 @@ type ThreadExtended struct {
 	UpvoteCount   int
 	DownvoteCount int
 	CommentCount  int
+}
+
+type Vote struct {
+	ID        int
+	VoterID   int // user id
+	ThreadID  uuid.UUID
+	Upvote    bool
+	CreatedAt time.Time
+}
+
+type CreatePost struct {
+	AuthorID int
+	Title    string
+	Content  string
+}
+
+type CreateComment struct {
+	AuthorID int
+	ParentID uuid.UUID // the thread that the reply is for
+	Content  string
+}
+
+type CreateVote struct {
+	VoterID  int
+	ThreadID uuid.UUID
+	Upvote   bool
 }
 
 type ThreadQuery struct {
@@ -79,30 +105,4 @@ func (q ThreadQuery) WithPostsOnly() ThreadQuery {
 func (q ThreadQuery) WithCommentsOnly() ThreadQuery {
 	q.ChildThreadsOnly = true
 	return q
-}
-
-type Vote struct {
-	ID        int
-	VoterID   int // user id
-	ThreadID  uuid.UUID
-	Upvote    bool
-	CreatedAt time.Time
-}
-
-type CreatePost struct {
-	AuthorID int
-	Title    string
-	Content  string
-}
-
-type CreateComment struct {
-	AuthorID int
-	ParentID uuid.UUID // the thread that the reply is for
-	Content  string
-}
-
-type CreateVote struct {
-	VoterID  int
-	ThreadID uuid.UUID
-	Upvote   bool
 }
