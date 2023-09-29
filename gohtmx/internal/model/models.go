@@ -95,7 +95,7 @@ type CreatePost struct {
 	Content  string
 }
 
-type CreateReply struct {
+type CreateComment struct {
 	AuthorID int
 	ParentID uuid.UUID // the thread that the reply is for
 	Content  string

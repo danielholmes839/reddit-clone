@@ -54,8 +54,8 @@ WITH selected_threads AS (
     AND (NOT @child_threads_only::bool OR thread.parent_id IS NOT NULL) -- if child threads only then thread.parent_id must be not null
 	ORDER BY thread.created_at DESC
 ),
-reply_counts AS (
-	SELECT parent_id as thread_id, COUNT(*) as reply_count
+comment_counts AS (
+	SELECT parent_id as thread_id, COUNT(*) as comment_count
 	FROM threads thread
 	WHERE thread.parent_id IN (SELECT id FROM selected_threads)
 	GROUP BY thread.parent_id
@@ -73,13 +73,13 @@ SELECT
 	st.*,
     -- extended info
 	u.username,
-	coalesce(rc.reply_count, 0) as reply_count,
+	coalesce(cc.comment_count, 0) as comment_count,
 	coalesce(vc.upvote_count, 0) as upvote_count,
 	coalesce(vc.downvote_count, 0) as downvote_count,
 	EXISTS (SELECT 1 FROM votes v1 WHERE v1.thread_id = st.id AND v1.voter_id = sqlc.narg('reader_id') AND v1.upvote = TRUE) as has_upvoted,
     EXISTS (SELECT 1 FROM votes v2 WHERE v2.thread_id = st.id AND v2.voter_id = sqlc.narg('reader_id') AND v2.upvote = FALSE) as has_downvoted
 FROM selected_threads st
-LEFT JOIN reply_counts rc ON st.id = rc.thread_id
+LEFT JOIN comment_counts cc ON st.id = cc.thread_id
 LEFT JOIN vote_counts vc ON st.id = vc.thread_id
 INNER JOIN users u ON st.author_id = u.id;
 
@@ -90,8 +90,8 @@ WITH selected_threads AS (
     WHERE thread.id = sqlc.arg('id')
     LIMIT 1
 ),
-reply_counts AS (
-	SELECT parent_id as thread_id, COUNT(*) as reply_count
+comment_counts AS (
+	SELECT parent_id as thread_id, COUNT(*) as comment_count
 	FROM threads thread
 	WHERE thread.parent_id IN (SELECT id FROM selected_threads)
 	GROUP BY thread.parent_id
@@ -109,12 +109,12 @@ SELECT
 	st.*,
     -- extended info
 	u.username,
-	coalesce(rc.reply_count, 0) as reply_count,
+	coalesce(cc.comment_count, 0) as comment_count,
 	coalesce(vc.upvote_count, 0) as upvote_count,
 	coalesce(vc.downvote_count, 0) as downvote_count,
 	EXISTS (SELECT 1 FROM votes v1 WHERE v1.thread_id = st.id AND v1.voter_id = sqlc.narg('reader_id') AND v1.upvote = TRUE) as has_upvoted,
     EXISTS (SELECT 1 FROM votes v2 WHERE v2.thread_id = st.id AND v2.voter_id = sqlc.narg('reader_id') AND v2.upvote = FALSE) as has_downvoted
 FROM selected_threads st
-LEFT JOIN reply_counts rc ON st.id = rc.thread_id
+LEFT JOIN comment_counts cc ON st.id = cc.thread_id
 LEFT JOIN vote_counts vc ON st.id = vc.thread_id
 INNER JOIN users u ON st.author_id = u.id;

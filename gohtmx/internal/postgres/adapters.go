@@ -66,7 +66,7 @@ func createDetailedThreadModel(record db.GetThreadsRow) model.ThreadExtended {
 		Author:        record.Username,
 		UpvoteCount:   int(record.UpvoteCount),
 		DownvoteCount: int(record.DownvoteCount),
-		CommentCount:  int(record.ReplyCount),
+		CommentCount:  int(record.CommentCount),
 		Vote:          vote,
 	}
 }

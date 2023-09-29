@@ -52,7 +52,7 @@ func (pdb *DB) CreatePost(ctx context.Context, input model.CreatePost) (model.Th
 	return createThreadModel(post), nil
 }
 
-func (pdb *DB) CreateComment(ctx context.Context, input model.CreateReply) (model.Thread, error) {
+func (pdb *DB) CreateComment(ctx context.Context, input model.CreateComment) (model.Thread, error) {
 	// get the parent thread
 	parent, err := pdb.Query.GetThread(ctx, input.ParentID)
 	if err != nil {

@@ -61,7 +61,7 @@ func main() {
 		panic(err)
 	}
 
-	_, err = db.CreateComment(ctx, model.CreateReply{
+	_, err = db.CreateComment(ctx, model.CreateComment{
 		AuthorID: primeagen.ID,
 		ParentID: post.ID,
 		Content:  "Stop the cap",
