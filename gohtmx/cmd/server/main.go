@@ -178,6 +178,12 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.DefaultLogger)
 
+	fs := http.FileServer(http.Dir("./assets/public"))
+
+	r.Get("/public/*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.StripPrefix("/public/", fs).ServeHTTP(w, r)
+	}))
+
 	// handle login form submissions
 	r.Post("/login", func(w http.ResponseWriter, r *http.Request) {
 		values, err := ParseLoginFormValues(r)
